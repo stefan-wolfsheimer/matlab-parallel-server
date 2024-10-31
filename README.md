@@ -7,7 +7,7 @@ After logging into the cluster, start MATLAB.  On the Home tab, click Parallel >
 Jobs will now default to the cluster rather than submit to the local machine.
 
 ## INSTALLATION and CONFIGURATION – MATLAB client on the desktop
-The Snellius MATLAB support package can be found **[HERE](https://github.com/sara-nl/matlab-parallel-server/archive/refs/tags/0.1.zip)**.
+The Snellius MATLAB support package can be found **[HERE](release/surfDesktop.zip)**.
 
 Download the ZIP file and start MATLAB.  The ZIP file should be unzipped in the location returned by calling
 
