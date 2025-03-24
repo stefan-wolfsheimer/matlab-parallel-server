@@ -45,7 +45,7 @@ end
 % runSchedulerCommand).  Need to change directories to it first.
 % Tried calling feval instead, but
 % feval(/very/long/path/to/plugin/scripts/fcn) won't work.
-odir = cd(cluster.PluginScriptsLocation);
+odir = cd(fullfile(cluster.PluginScriptsLocation,"private"));
 % Change back to the old directory on cleanup
 x = onCleanup(@()cd(odir));
 rc = getRemoteConnection(cluster);

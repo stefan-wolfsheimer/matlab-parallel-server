@@ -4,7 +4,7 @@ function out = clusterDefinition(cluster)
 % in MATLAB.  clusterDefinition will pass back a structure to
 % configCluster.
 
-% Copyright 2017-2023 The MathWorks, Inc.
+% Copyright 2017-2024 The MathWorks, Inc.
 
 % Determine the location of the clusternameDesktop.conf or clusternameCluster.conf; we assume that
 % it is in the same directory as configCluster. Additional logic to support in-place development. 
@@ -166,9 +166,12 @@ function out = iErrorCheckDef(out)
 % Error checking and character checks
 
 % Verify that numWorkers is specified and an integer
+if ~isfield(out, 'NumWorkers')
+    error('Field "NumWorkers" is missing in the %s configuration file.', configFileName)
+end
 numWorkersStr = string(out.NumWorkers);
 if (strlength(numWorkersStr) == 0)
-    error('NumWorkers must be specified in the %s configuration file.', configFileName)
+    error('Field "NumWorkers" must not be empty in the %s configuration file.', configFileName)
 elseif ~isa(out.NumWorkers, 'double')
     error('NumWorkers must be specified as an integer in the %s configuration file.', configFileName)
 end
@@ -184,8 +187,10 @@ if isfield(out, 'RemoteJobStorageLocation') && (strlength(out.RemoteJobStorageLo
     out.RemoteJobStorageLocation = lastCharacterCheck(out.RemoteJobStorageLocation, 'unix');
 end
 
-% Change JSL stuct values to a char
-if isfield(out, 'JobStorageLocation')
+% Error if JSL is missing or empty.  Change JSL stuct values to a char.
+if ~isfield(out, 'JobStorageLocation') || isempty(out.JobStorageLocation)
+    error('Field "JobStorageLocation" is missing or empty in the %s configuration file.', configFileName)
+else
     if isfield(out.JobStorageLocation, 'unix')
         out.JobStorageLocation.unix = char(out.JobStorageLocation.unix);
     elseif isfield(out.JobStorageLocation, 'windows')
